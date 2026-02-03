@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Movie } from "../../type";
 
 export default function Section({
   title,
@@ -7,13 +8,7 @@ export default function Section({
   showRating,
 }: {
   title: string;
-  movies: {
-    id: string;
-    poster: string;
-    title: string;
-    rating?: number;
-    release?: string;
-  }[];
+  movies: Movie[];
   showRating?: boolean;
 }) {
   return (
@@ -23,13 +18,13 @@ export default function Section({
       <Link className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" href={'/movies/123'}>
         {movies?.map((movie) => (
           <div
-            key={movie.id}
+            key={movie?._id}
             className="rounded-xl bg-white p-3 shadow-sm transition hover:scale-105 hover:shadow-md"
           >
             <div className="relative h-64 w-full overflow-hidden rounded-lg">
               <Image
-                src={movie.poster}
-                alt={movie.title}
+                src={movie?.posterUrl || ''}
+                alt={movie?.title}
                 fill
                 className="object-cover"
               />
@@ -45,7 +40,7 @@ export default function Section({
                   ⭐ {movie.rating}
                 </p>
               ) : (
-                <p className="text-xs text-gray-500">{movie.release}</p>
+                <p className="text-xs text-gray-500">{movie?.releaseDate}</p>
               )}
             </div>
           </div>
