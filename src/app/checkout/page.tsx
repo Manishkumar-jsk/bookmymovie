@@ -1,98 +1,111 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 
 export default function CheckoutPage() {
-  const movie = {
-    title: "Animal",
-    poster:
-      "https://images.pexels.com/photos/7886608/pexels-photo-7886608.jpeg",
-    language: "Hindi",
-    duration: "2h 50m",
-    time: "7:00 PM",
-    theatre: "PVR Cinemas - Phoenix Mall",
-    seats: [
-      { id: "A1", type: "Regular", price: 200 },
-      { id: "A2", type: "Premium", price: 300 },
-    ],
-  };
+  const [coupon, setCoupon] = useState("");
 
-  const subtotal = movie.seats.reduce((acc, s) => acc + s.price, 0);
-  const gst = Math.round(subtotal * 0.18);
-  const total = subtotal + gst;
+  const ticketPrice = 1999;
+  const quantity = 2;
+  const subtotal = ticketPrice * quantity;
+  const discount = coupon === "EVENT10" ? 0.1 * subtotal : 0;
+  const total = subtotal - discount;
 
   return (
-    <main className="min-h-screen bg-white text-gray-900 px-4 sm:px-6 py-6 flex flex-col">
-      <h1 className="text-2xl font-bold mb-6">Checkout</h1>
+    <main className="max-w-5xl mx-auto px-4 py-6" style={{height:"calc(100vh - 190px)"}}>
+      <h1 className="text-3xl font-bold mb-6">Checkout</h1>
 
-      <section className="flex gap-4 mb-6">
-        <Image
-          src={movie.poster}
-          alt={movie.title}
-          width={100}
-          height={150}
-          className="rounded-lg object-cover"
-        />
-        <div>
-          <h2 className="text-xl font-semibold">{movie.title}</h2>
-          <p className="text-gray-600 text-sm">
-            {movie.language} • {movie.duration}
-          </p>
-          <p className="text-gray-600 text-sm mt-1">{movie.theatre}</p>
-          <p className="text-gray-600 text-sm mt-1">⏰ {movie.time}</p>
-        </div>
-      </section>
+      <div className="grid md:grid-cols-3 gap-6">
+        {/* Left - User Details & Payment */}
+        <div className="md:col-span-2 space-y-6">
+          {/* User Details */}
+          <section className="bg-white p-5 rounded-xl shadow">
+            <h2 className="text-xl font-semibold mb-4">User Details</h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Full Name"
+                className="border rounded-lg px-3 py-2"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                className="border rounded-lg px-3 py-2"
+              />
+              <input
+                type="tel"
+                placeholder="Mobile Number"
+                className="border rounded-lg px-3 py-2"
+              />
+            </div>
+          </section>
 
-      <section className="rounded-lg bg-gray-100 p-4 mb-6">
-        <h3 className="font-semibold mb-2">Selected Seats</h3>
-        <ul className="mb-2">
-          {movie.seats.map((seat) => (
-            <li key={seat.id} className="flex justify-between text-sm">
-              <span>
-                {seat.id} ({seat.type})
-              </span>
-              <span>₹{seat.price}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="border-t border-gray-300 pt-2 text-sm flex justify-between">
-          <span>Subtotal</span>
-          <span>₹{subtotal}</span>
+          {/* Payment Options */}
+          <section className="bg-white p-5 rounded-xl shadow">
+            <h2 className="text-xl font-semibold mb-4">Payment Method</h2>
+            <div className="space-y-3">
+              <label className="flex items-center gap-3">
+                <input type="radio" name="payment" defaultChecked /> UPI
+              </label>
+              <label className="flex items-center gap-3">
+                <input type="radio" name="payment" /> Credit / Debit Card
+              </label>
+              <label className="flex items-center gap-3">
+                <input type="radio" name="payment" /> Net Banking
+              </label>
+            </div>
+          </section>
         </div>
-        <div className="flex justify-between text-sm">
-          <span>GST (18%)</span>
-          <span>₹{gst}</span>
-        </div>
-        <div className="border-t border-gray-300 pt-2 mt-2 font-semibold flex justify-between">
-          <span>Total</span>
-          <span>₹{total}</span>
-        </div>
-      </section>
 
-      <section className="mb-6">
-        <h3 className="font-semibold mb-2">Payment Method</h3>
-        <div className="flex flex-col gap-2">
-          <button className="rounded-lg border border-gray-300 px-4 py-2 text-left hover:bg-gray-200">
-            💳 Credit / Debit Card
-          </button>
-          <button className="rounded-lg border border-gray-300 px-4 py-2 text-left hover:bg-gray-200">
-            🏦 Net Banking
-          </button>
-          <button className="rounded-lg border border-gray-300 px-4 py-2 text-left hover:bg-gray-200">
-            📱 UPI / Wallet
-          </button>
-        </div>
-      </section>
+        {/* Right - Order Summary */}
+        <div className="bg-white p-5 rounded-xl shadow h-fit">
+          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
 
-      <div className="mt-auto sticky bottom-0 left-0 w-full bg-white border-t border-gray-300 p-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-        <span className="font-semibold">
-          Total: ₹{total}
-        </span>
-        <Link
-          href="/success"
-          className="w-full sm:w-auto text-center rounded-lg bg-red-500 px-6 py-3 text-white font-semibold"
-        >
-          Confirm & Pay
-        </Link>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span>Ticket Price</span>
+              <span>₹{ticketPrice}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Quantity</span>
+              <span>{quantity}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Subtotal</span>
+              <span>₹{subtotal}</span>
+            </div>
+            <div className="flex justify-between text-green-600">
+              <span>Discount</span>
+              <span>- ₹{discount}</span>
+            </div>
+            <hr />
+            <div className="flex justify-between font-bold text-lg">
+              <span>Total</span>
+              <span>₹{total}</span>
+            </div>
+          </div>
+
+          {/* Coupon */}
+          <div className="mt-4 flex gap-2">
+            <input
+              value={coupon}
+              onChange={(e) => setCoupon(e.target.value)}
+              placeholder="Enter coupon"
+              className="border rounded-lg px-3 py-2 flex-1"
+            />
+            <button className="bg-gray-800 text-white px-4 py-2 rounded-lg">
+              Apply
+            </button>
+          </div>
+
+          <Link
+            href="/success"
+            className="block mt-6 bg-red-600 text-white text-center py-3 rounded-lg font-semibold"
+          >
+            Pay Now
+          </Link>
+        </div>
       </div>
     </main>
   );
