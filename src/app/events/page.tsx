@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useGetEventsQuery } from "../store/api/eventsApi";
 
 const mockEvents = [
   {
@@ -46,6 +47,7 @@ const mockEvents = [
 export default function EventsPage() {
   const [category, setCategory] = useState("All");
   const [city, setCity] = useState("");
+  const {data:eventsData}  = useGetEventsQuery({});
 
   const filteredEvents = mockEvents.filter((event) => {
     if (category !== "All" && event.category !== category) return false;
@@ -82,10 +84,10 @@ export default function EventsPage() {
 
       {/* Events Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {filteredEvents.map((event) => (
+        {eventsData?.data.map((event) => (
           <Link
-            href={`/events/${event.id}`}
-            key={event.id}
+            href={`/events/${event._id}`}
+            key={event._id}
             className="bg-white rounded-xl shadow hover:scale-[1.02] transition overflow-hidden"
           >
             <div className="relative h-48">

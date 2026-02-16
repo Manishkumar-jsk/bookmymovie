@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 //slices
-import { useLoginUserMutation } from "@/store/api/authApi";
+import { useLoginUserMutation } from "@/app/store/api/authApi";
 import toast from "react-hot-toast";
 
 export default function SignInPage() {
@@ -40,10 +40,9 @@ export default function SignInPage() {
 
     onSubmit: async (values) => {
       try {
-        const data = await loginUser(values).unwrap();
+        await loginUser(values).unwrap();
         toast.success("Loggedin successfully");
         router.push("/");
-        localStorage.setItem("token", data?.token);
         resetForm();
       } catch (error) {
         toast.error("Something went wrong!");

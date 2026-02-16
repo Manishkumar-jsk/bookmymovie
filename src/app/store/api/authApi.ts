@@ -4,6 +4,7 @@ export const authApi = createApi({
     reducerPath:"authApi",
     baseQuery:fetchBaseQuery({
         baseUrl:"http://localhost:5000/api",
+        credentials:"include"
     }),
     endpoints:(builder) => ({
         registerUser:builder.mutation({

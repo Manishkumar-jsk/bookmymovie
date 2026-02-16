@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 //slices
-import { useRegisterUserMutation } from "@/store/api/authApi";
+import { useRegisterUserMutation } from "@/app/store/api/authApi";
 import toast from "react-hot-toast";
 
 export default function SignUpPage() {
@@ -41,10 +41,9 @@ export default function SignUpPage() {
 
     onSubmit: async (values) => {
       try {
-        const data = await registerUser(values).unwrap();
+        await registerUser(values).unwrap();
         toast.success("Account created successfully");
         router.push("/");
-        localStorage.setItem("token", data?.token);
         resetForm();
       } catch (error) {
         toast.error("Something went wrong!");

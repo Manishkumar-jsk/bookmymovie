@@ -3,8 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
-import ReduxProvider from "@/store/providers/ReduxProvider";
+import ReduxProvider from "@/app/store/providers/ReduxProvider";
 import { Toaster } from "react-hot-toast";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import { AuthProvider } from "./context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,6 +18,8 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+config.autoAddCss = false;
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -31,12 +36,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProvider>
-          <Header />
-          {children}
-          <Toaster position="top-right" reverseOrder={false} />
-          <Footer />
-        </ReduxProvider>
+          <ReduxProvider>
+        <AuthProvider>
+            <Header />
+            {children}
+            <Toaster position="top-right" reverseOrder={false} />
+            <Footer />
+        </AuthProvider>
+          </ReduxProvider>
       </body>
     </html>
   );
