@@ -1,7 +1,7 @@
 "use client";
 
-import { createContext, useContext} from "react";
-import { useGetUserQuery } from "../store/api/user";
+import { createContext, useContext } from "react";
+import { useGetUserQuery } from "../store/api/authApi";
 
 type User = {
   _id: string;
@@ -21,10 +21,15 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data, isLoading } = useGetUserQuery(undefined);
+  const { data, isLoading } = useGetUserQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+  });
 
   return (
-    <AuthContext.Provider value={{ user: data?.user || null, loading: isLoading }}>
+    <AuthContext.Provider
+      value={{ user: data?.user || null, loading: isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

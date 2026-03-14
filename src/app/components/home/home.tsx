@@ -1,38 +1,14 @@
+"use client";
+import { useGetCategoriesQuery } from "@/app/store/api/categoriesApi";
+import { useGetEventsQuery } from "@/app/store/api/eventsApi";
+import { useAppSelector } from "@/app/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
 
-const categories = [
-  { name: "Music", image: "https://images.pexels.com/photos/7886608/pexels-photo-7886608.jpeg" },
-  { name: "Tech", image: "https://images.pexels.com/photos/7886608/pexels-photo-7886608.jpeg" },
-  { name: "Comedy", image: "https://images.pexels.com/photos/7886608/pexels-photo-7886608.jpeg" },
-  { name: "Sports", image: "https://images.pexels.com/photos/7886608/pexels-photo-7886608.jpeg" },
-];
-
-const events = [
-  {
-    id: "1",
-    title: "Arijit Singh Live Concert",
-    city: "Mumbai",
-    date: "25 Feb 2026",
-    image: "https://images.pexels.com/photos/7886608/pexels-photo-7886608.jpeg",
-  },
-  {
-    id: "2",
-    title: "React India Conference",
-    city: "Bangalore",
-    date: "10 March 2026",
-    image: "https://images.pexels.com/photos/7886608/pexels-photo-7886608.jpeg",
-  },
-  {
-    id: "3",
-    title: "Standup Comedy Night",
-    city: "Delhi",
-    date: "5 March 2026",
-    image: "https://images.pexels.com/photos/7886608/pexels-photo-7886608.jpeg",
-  },
-];
-
 export default function HomePage() {
+  const { data: eventsData } = useGetEventsQuery();
+  const { data: categoriesData } = useGetCategoriesQuery();
+
   return (
     <main className="max-w-7xl mx-auto px-4 py-6 space-y-12">
       {/* Hero Section */}
@@ -45,7 +21,9 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
           <div className="text-center text-white space-y-4">
-            <h1 className="text-4xl font-bold">Discover & Book Amazing Events</h1>
+            <h1 className="text-4xl font-bold">
+              Discover & Book Amazing Events
+            </h1>
             <p className="text-lg">Concerts • Tech • Comedy • Sports</p>
             <div className="flex gap-2 justify-center">
               <input
@@ -65,17 +43,12 @@ export default function HomePage() {
       <section>
         <h2 className="text-2xl font-bold mb-4">Browse by Categories</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {categories.map((cat) => (
+          {categoriesData?.data?.map((cat) => (
             <div
               key={cat.name}
               className="bg-white shadow rounded-xl p-4 flex flex-col items-center gap-2 hover:scale-105 transition"
             >
-              <Image
-                src={cat.image}
-                alt={cat.name}
-                width={80}
-                height={80}
-              />
+              <Image src={cat.image} alt={cat.name} width={80} height={80} />
               <p className="font-semibold">{cat.name}</p>
             </div>
           ))}
@@ -86,10 +59,10 @@ export default function HomePage() {
       <section>
         <h2 className="text-2xl font-bold mb-4">Trending Events</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {events.map((event) => (
+          {eventsData?.map((event) => (
             <Link
-              href={`/event/${event.id}`}
-              key={event.id}
+              href={`/event/${event._id}`}
+              key={event._id}
               className="bg-white rounded-xl shadow overflow-hidden hover:scale-[1.02] transition"
             >
               <div className="relative h-48">
@@ -102,7 +75,7 @@ export default function HomePage() {
               </div>
               <div className="p-4 space-y-1">
                 <h3 className="font-semibold text-lg">{event.title}</h3>
-                <p className="text-sm text-gray-600">{event.city}</p>
+                <p className="text-sm text-gray-600">{event.location}</p>
                 <p className="text-sm text-gray-500">{event.date}</p>
               </div>
             </Link>

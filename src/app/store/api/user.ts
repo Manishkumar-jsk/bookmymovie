@@ -1,19 +1,17 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "./baseQueryWithAuth";
 
 export const userApi = createApi({
-    reducerPath:"userApi",
-    baseQuery:fetchBaseQuery({
-        baseUrl:"http://localhost:5000/api/user",
-        credentials:"include"
-    }),
-    endpoints:(builder) => ({
-        getUser:builder.query({
-            query:() => ({
-                url:'/me',
-                method:"GET"
+    reducerPath: "userApi",
+    baseQuery: baseQueryWithReauth,
+    endpoints: (builder) => ({
+        getUser: builder.query({
+            query: () => ({
+                url: '/user/me',
+                method: "GET"
             })
         })
     })
 })
 
-export const {useGetUserQuery} = userApi;
+export const { useGetUserQuery } = userApi;

@@ -2,8 +2,9 @@
 import { useRouter } from "next/navigation";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCompactDisc } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/app/context/AuthContext";
+import UserProfileButton from "./components/user-profile-button/UserProfileButton";
 
 const Header = () => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const Header = () => {
         className="text-2xl font-bold text-red-500"
         onClick={() => router.push("/")}
       >
-        🎬 EventBook
+        <FontAwesomeIcon icon={faCompactDisc} /> EventBook
       </h1>
 
       <div className="flex items-center gap-4">
@@ -25,12 +26,10 @@ const Header = () => {
         </select>
 
         {data?.user ? (
-          <button>
-            <FontAwesomeIcon icon={faUser} className="w-5 h-5 text-blue-500" />
-          </button>
+          <UserProfileButton />
         ) : (
           <button
-            className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition"
+            className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition cursor-pointer"
             onClick={() => router.push("/login")}
           >
             Sign In

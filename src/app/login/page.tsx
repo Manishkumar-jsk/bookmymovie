@@ -42,7 +42,7 @@ export default function SignInPage() {
       try {
         await loginUser(values).unwrap();
         toast.success("Loggedin successfully");
-        router.push("/");
+        router.replace("/");
         resetForm();
       } catch (error) {
         toast.error("Something went wrong!");
