@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import * as Yup from "yup";
 
 //formik
@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const [loginUser, { isLoading }] = useLoginUserMutation();
+  const searchParams = useSearchParams();
+  const redirectTo = decodeURIComponent(searchParams.get("redirect") || "/");
   const router = useRouter();
 
   const {
@@ -42,7 +44,8 @@ export default function SignInPage() {
       try {
         await loginUser(values).unwrap();
         toast.success("Loggedin successfully");
-        router.replace("/");
+        router.replace(redirectTo || "/");
+        router.refresh();
         resetForm();
       } catch (error) {
         toast.error("Something went wrong!");

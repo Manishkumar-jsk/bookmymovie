@@ -1,7 +1,6 @@
 "use client";
 import { useGetCategoriesQuery } from "@/app/store/api/categoriesApi";
 import { useGetEventsQuery } from "@/app/store/api/eventsApi";
-import { useAppSelector } from "@/app/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -29,7 +28,7 @@ export default function HomePage() {
               <input
                 type="text"
                 placeholder="Search events, city..."
-                className="px-4 py-2 rounded-lg text-black w-[260px]"
+                className="px-4 py-2 rounded-lg text-black w-[260px] bg-white focus:outline-none"
               />
               <button className="bg-red-600 px-5 py-2 rounded-lg font-semibold">
                 Search

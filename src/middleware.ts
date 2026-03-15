@@ -4,17 +4,24 @@ const protectedRoutes = ["/profile", "/my-bookings", "/admin", "/checkout"];
 const authRoutes = ["/login", "/signup"];
 
 export function middleware(req: NextRequest) {
-    const { pathname } = req.nextUrl;
+    const { pathname, search } = req.nextUrl;
 
-    const token = req.cookies.get("token")?.value;
+    const token = req.cookies.get("accessToken")?.value;
 
     const isProtectedRoute = protectedRoutes.some((route) =>
         pathname.startsWith(route)
     );
+
     const isAuthRoute = authRoutes.includes(pathname);
 
     if (isProtectedRoute && !token) {
-        return NextResponse.redirect(new URL("/login", req.url));
+        const loginUrl = new URL("/login", req.url);
+
+        const redirectPath = encodeURIComponent(pathname + search);
+
+        loginUrl.searchParams.set("redirect", redirectPath);
+
+        return NextResponse.redirect(loginUrl);
     }
 
     if (isAuthRoute && token) {
