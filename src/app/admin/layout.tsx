@@ -26,8 +26,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
         <nav className="space-y-2">
           <a href="/dashboard" className="block py-2 px-3 rounded hover:bg-gray-700">Dashboard</a>
-          <a href="/events" className="block py-2 px-3 rounded hover:bg-gray-700">Events</a>
-          <a href="/users" className="block py-2 px-3 rounded hover:bg-gray-700">Users</a>
+          <a href="/admin/events" className="block py-2 px-3 rounded hover:bg-gray-700">Events</a>
+          <a href="/admin/categorys" className="block py-2 px-3 rounded hover:bg-gray-700">Categories</a>
+          <a href="/admin/bookings" className="block py-2 px-3 rounded hover:bg-gray-700">Bookings</a>
+          <a href="/admin/users" className="block py-2 px-3 rounded hover:bg-gray-700">Users</a>
         </nav>
       </aside>
 

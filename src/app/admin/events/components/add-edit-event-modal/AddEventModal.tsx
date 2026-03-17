@@ -191,7 +191,7 @@ const AddEditEventModal = ({
                 const file = e.currentTarget.files?.[0];
                 if (file) setFieldValue("image", file);
               }}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring border-gray-300"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring border-gray-300 cursor-pointer"
             />
           </div>
         </div>
@@ -255,7 +255,7 @@ const AddEditEventModal = ({
           <button
             type="button"
             onClick={addTicketType}
-            className="mt-1 text-sm text-blue-600 hover:text-blue-800 font-medium"
+            className="mt-1 text-sm text-blue-600 hover:text-blue-800 font-medium cursor-pointer"
           >
             + Add Ticket Type
           </button>
@@ -269,14 +269,14 @@ const AddEditEventModal = ({
               resetForm();
               onClose();
             }}
-            className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition"
+            className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition cursor-pointer"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleSubmit}
-            className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white transition"
+            className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white transition cursor-pointer"
           >
             {isEdit ? "Update" : "Add"}
           </button>

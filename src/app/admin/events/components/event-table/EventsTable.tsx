@@ -61,7 +61,7 @@ const EventsTable = () => {
         <h2 className="text-2xl font-semibold">Events Management</h2>
         <div className="flex gap-3">
           <button
-            className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
+            className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition cursor-pointer"
             onClick={() => setIsAddModalOpen(true)}
           >
             <FontAwesomeIcon icon={faPlus} /> Add Event

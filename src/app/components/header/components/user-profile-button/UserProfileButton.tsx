@@ -30,6 +30,10 @@ const UserProfileButton = () => {
     setIsOpen(false);
   };
 
+  const handleAdmin = () => {
+    router.push('/admin/events')
+  }
+
   const handleLogout = async () => {
     try {
       await logoutUser().unwrap();
@@ -60,6 +64,16 @@ const UserProfileButton = () => {
           >
             <FontAwesomeIcon icon={faUser} className="w-4 h-4 text-gray-400" />
             Profile
+          </button>
+
+          <hr className="border-gray-100" />
+
+          <button
+            onClick={handleAdmin}
+            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-t-lg transition cursor-pointer"
+          >
+            <FontAwesomeIcon icon={faUser} className="w-4 h-4 text-gray-400" />
+            Admin
           </button>
 
           <hr className="border-gray-100" />
