@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/app/store/hooks";
 
-const UserProfileButton = () => {
+const UserProfileButton = ({ role }: { role: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [logoutUser] = useLogoutUserMutation();
@@ -31,8 +31,8 @@ const UserProfileButton = () => {
   };
 
   const handleAdmin = () => {
-    router.push('/admin/events')
-  }
+    router.push("/admin/events");
+  };
 
   const handleLogout = async () => {
     try {
@@ -68,13 +68,18 @@ const UserProfileButton = () => {
 
           <hr className="border-gray-100" />
 
-          <button
-            onClick={handleAdmin}
-            className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-t-lg transition cursor-pointer"
-          >
-            <FontAwesomeIcon icon={faUser} className="w-4 h-4 text-gray-400" />
-            Admin
-          </button>
+          {role === "admin" && (
+            <button
+              onClick={handleAdmin}
+              className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-t-lg transition cursor-pointer"
+            >
+              <FontAwesomeIcon
+                icon={faUser}
+                className="w-4 h-4 text-gray-400"
+              />
+              Admin
+            </button>
+          )}
 
           <hr className="border-gray-100" />
 
