@@ -1,20 +1,32 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Link from "next/link";
 import { useAppSelector } from "../store/hooks";
-import { useBookEventMutation } from "../store/api/bookingApi";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
+import {
+  useCreateOrderMutation,
+  useVerifyOrderMutation,
+} from "../store/api/paymentApi";
 
 export default function CheckoutPage() {
   const booking = useAppSelector((state) => state.booking);
-  const [bookEvent] = useBookEventMutation();
+  const [createOrder] = useCreateOrderMutation();
+  const [verifyOrder] = useVerifyOrderMutation();
   const router = useRouter();
   const data = useAuth();
+
+  const loadScript = () =>
+    new Promise((resolve) => {
+      const s = document.createElement("script");
+      s.src = "https://checkout.razorpay.com/v1/checkout.js";
+      s.onload = () => resolve(true);
+      s.onerror = () => resolve(false);
+      document.body.appendChild(s);
+    });
 
   const {
     values,
@@ -39,11 +51,50 @@ export default function CheckoutPage() {
     }),
     onSubmit: async (values) => {
       console.log(values);
+      const ok = await loadScript();
+      if (!ok) {
+        toast.error("Razorpay hasn't been loaded");
+        return;
+      }
       try {
-        await bookEvent({ eventId, ticketTypeId: type, quantity }).unwrap();
-        resetForm();
-        toast.success("Ticket booked successfully");
-        router.push("/success");
+        const orderData = await createOrder({
+          eventId,
+          ticketType: type,
+          quantity,
+        }).unwrap();
+
+        const { orderId, amount, currency, bookingId, keyId } = orderData?.data;
+
+        const options = {
+          key: keyId,
+          amount,
+          currency,
+          name: values.name,
+          description: `Booking for ${booking?.type} with ${amount}`,
+          order_id: orderId,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          handler: async (response: any) => {
+            try {
+              const data = await verifyOrder({
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+                bookingId,
+              });
+              const bookingData = data?.data?.data;
+              toast.success("Booking confirmed");
+              resetForm();
+              router.replace(
+                `/success?title=${bookingData?.event?.title}&location=${bookingData?.event?.location}&date=${bookingData?.event?.date}&bookingId=${bookingData?.bookingId}`,
+              );
+            } catch (error) {
+              toast.error("Not verified contact customer care");
+            }
+          },
+          theme: { color: "#6366f1" },
+          // modal:  { ondismiss: () => setLoading(false) },
+        };
+        new window.Razorpay(options).open();
       } catch (error) {
         console.error("Booking failed:", error);
         toast.error("Failed to book ticket. Please try again.");
@@ -109,22 +160,6 @@ export default function CheckoutPage() {
               )}
             </div>
           </section>
-
-          {/* Payment Options */}
-          {/* <section className="bg-white p-5 rounded-xl shadow">
-            <h2 className="text-xl font-semibold mb-4">Payment Method</h2>
-            <div className="space-y-3">
-              <label className="flex items-center gap-3">
-                <input type="radio" name="payment" defaultChecked /> UPI
-              </label>
-              <label className="flex items-center gap-3">
-                <input type="radio" name="payment" /> Credit / Debit Card
-              </label>
-              <label className="flex items-center gap-3">
-                <input type="radio" name="payment" /> Net Banking
-              </label>
-            </div>
-          </section> */}
         </div>
 
         {/* Right - Order Summary */}
@@ -144,30 +179,12 @@ export default function CheckoutPage() {
               <span>Subtotal</span>
               <span>₹{subtotal}</span>
             </div>
-            {/* <div className="flex justify-between text-green-600">
-              <span>Discount</span>
-              <span>- ₹{discount}</span>
-            </div> */}
             <hr />
             <div className="flex justify-between font-bold text-lg">
               <span>Total</span>
               <span>₹{subtotal}</span>
             </div>
           </div>
-
-          {/* Coupon */}
-          {/* <div className="mt-4 flex gap-2">
-            <input
-              value={coupon}
-              onChange={(e) => setCoupon(e.target.value)}
-              placeholder="Enter coupon"
-              className="border rounded-lg px-3 py-2 flex-1"
-            />
-            <button className="bg-gray-800 text-white px-4 py-2 rounded-lg">
-              Apply
-            </button>
-          </div> */}
-
           <button
             type="button"
             onClick={() => handleSubmit()}

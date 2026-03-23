@@ -24,7 +24,7 @@ export default function SeatSelectionPage() {
       setBooking({
         eventId: String(eventId),
         type: String(
-          ticketTypes?.find((t) => t.type === selectedTicket?.type)?._id,
+          ticketTypes?.find((t) => t.type === selectedTicket?.type)?.type,
         ),
         price: Number(selectedTicket?.price),
         quantity: Number(qty),

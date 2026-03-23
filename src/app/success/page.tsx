@@ -2,11 +2,18 @@
 
 import React from "react";
 import Link from "next/link";
-import { useGetBookingsQuery } from "../store/api/bookingApi";
+import { useSearchParams } from "next/navigation";
+import { formatDateTime } from "../utils/date";
 
 export default function BookingSuccessPage() {
-  const { data: bookingData } = useGetBookingsQuery();
-  console.log(bookingData, "bookingData");
+  const searchParams = useSearchParams();
+  const title = searchParams.get("title");
+  const location = searchParams.get("location");
+  const date = searchParams.get("date");
+  const bookingId = searchParams.get("bookingId");
+
+  const { date: formattedDate, time } = formatDateTime(String(date));
+
   return (
     <main
       className="max-w-3xl mx-auto px-4 py-10 text-center"
@@ -22,16 +29,16 @@ export default function BookingSuccessPage() {
 
         <div className="bg-gray-100 rounded-xl p-4 text-left space-y-2">
           <p>
-            <b>Event:</b> Arijit Singh Live Concert
+            <b>Event:</b> {title}
           </p>
           <p>
-            <b>Date:</b> 25 Feb 2026
+            <b>Date:</b> {formattedDate}
           </p>
           <p>
-            <b>Location:</b> Mumbai
+            <b>Location:</b> {location}
           </p>
           <p>
-            <b>Booking ID:</b> EVT123456
+            <b>Booking ID:</b> {bookingId}
           </p>
         </div>
 
