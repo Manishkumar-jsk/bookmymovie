@@ -4,10 +4,14 @@ import { useFormik } from "formik";
 import { useMemo } from "react";
 import { isNil } from "lodash";
 import toast from "react-hot-toast";
+
+//slices
 import {
   useAddUserMutation,
   useUpdateUserMutation,
 } from "@/app/store/api/user";
+
+//types
 import { userDetails } from "@/app/types/user";
 
 const INITIAL_FORM_VALUES = {

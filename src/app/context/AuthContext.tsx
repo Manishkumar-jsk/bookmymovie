@@ -1,19 +1,12 @@
 "use client";
 
 import { createContext, useContext } from "react";
+
+//slices
 import { useGetUserQuery } from "../store/api/authApi";
 
-type User = {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-};
-
-interface AuthContextType {
-  user: User | null;
-  loading: boolean;
-}
+//types
+import { AuthContextType } from "../types/authContextType";
 
 const AuthContext = createContext<AuthContextType>({
   user: null,

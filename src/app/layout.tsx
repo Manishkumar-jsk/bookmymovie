@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
+import { Toaster } from "react-hot-toast";
 import { Geist, Geist_Mono } from "next/font/google";
+
+//styles
 import "./globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
+//components
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+
+//store
 import ReduxProvider from "@/app/store/providers/ReduxProvider";
-import { Toaster } from "react-hot-toast";
-import "@fortawesome/fontawesome-svg-core/styles.css";
+
+//third-party
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -36,14 +44,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-          <ReduxProvider>
-        <AuthProvider>
+        <ReduxProvider>
+          <AuthProvider>
             <Header />
             {children}
             <Toaster position="top-right" reverseOrder={false} />
             <Footer />
-        </AuthProvider>
-          </ReduxProvider>
+          </AuthProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

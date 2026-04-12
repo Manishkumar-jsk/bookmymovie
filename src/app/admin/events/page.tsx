@@ -1,12 +1,14 @@
-import React from 'react'
-import EventsTable from './components/event-table/EventsTable'
+import React from "react";
+
+//components
+import EventsTable from "./components/event-table/EventsTable";
 
 const page = () => {
   return (
     <div>
       <EventsTable />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

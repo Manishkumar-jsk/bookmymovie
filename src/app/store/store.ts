@@ -5,7 +5,8 @@ import { eventsApi } from "./api/eventsApi";
 import { categoriesApi } from "./api/categoriesApi";
 import { bookingApi } from "./api/bookingApi";
 import bookingSlice from "./slices/bookingSlice";
-import authSlice from "./slices/authSlice"
+import authSlice from "./slices/authSlice";
+import locationSlice from "./slices/locationSlice";
 import { paymentApi } from "./api/paymentApi";
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
     //slices
     booking: bookingSlice,
     auth: authSlice,
+    location:locationSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([authApi.middleware, userApi.middleware, eventsApi.middleware, categoriesApi.middleware, bookingApi.middleware, paymentApi.middleware]),

@@ -1,12 +1,19 @@
 "use client";
+
+import React, { useState } from "react";
+
+//third-party
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
+
+//components
 import ActionsCell from "../action-cell/ActionCell";
-import { useGetUsersQuery } from "@/app/store/api/user";
 import AddUserModal from "../add-user-modal/AddUserModal";
+
+//slices
+import { useGetUsersQuery } from "@/app/store/api/user";
 
 const UserTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

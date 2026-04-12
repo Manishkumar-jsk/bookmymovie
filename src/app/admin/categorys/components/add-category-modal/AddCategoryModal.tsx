@@ -4,10 +4,14 @@ import { useFormik } from "formik";
 import { useMemo } from "react";
 import { isNil } from "lodash";
 import toast from "react-hot-toast";
+
+//slices
 import {
   useAddCategoryMutation,
   useUpdateCategoryMutation,
 } from "@/app/store/api/categoriesApi";
+
+//types
 import { CategoryDetails } from "@/app/types/categories";
 
 const INITIAL_FORM_VALUES = {

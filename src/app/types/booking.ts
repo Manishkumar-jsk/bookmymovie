@@ -63,3 +63,25 @@ export type VerifyOrderResponse = {
         __v: number;
     };
 }
+
+export interface Event {
+    _id: string;
+    title: string;
+    date: string; // ISO string
+    location: string;
+}
+
+export interface BookingStatusResponse {
+    _id: string;
+    user: string;
+    event: Event;
+    bookingId: string;
+    ticketType: string;
+    paymentStatus: "success" | "failed" | "pending";
+    bookingStatus: "success" | "cancelled" | "pending";
+}
+
+export interface BookingResponse {
+    success: boolean;
+    booking: BookingStatusResponse[];
+}

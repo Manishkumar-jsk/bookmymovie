@@ -40,3 +40,8 @@ export interface DeleteUserModalProps {
   onClose: () => void;
   details?:userDetails;
 }
+
+export interface EventsLocationResponse {
+  success:boolean;
+  locations:[];
+}

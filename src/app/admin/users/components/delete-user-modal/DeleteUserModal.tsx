@@ -1,8 +1,14 @@
 import React from "react";
+
+//third-party
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
+
+//types
 import { DeleteUserModalProps } from "@/app/types/user";
+
+//slices
 import { useDeleteUserMutation } from "@/app/store/api/user";
 
 const DeleteUserModal: React.FC<DeleteUserModalProps> = ({

@@ -2,16 +2,18 @@ import { Event, EventPayload, GetEventsByIdResponse, GetEventsResponse, UpdateEv
 import { formatDateTime } from "@/app/utils/date";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./baseQueryWithAuth";
+import { EventsLocationResponse } from "@/app/types/user";
 
 export const eventsApi = createApi({
     reducerPath: "eventsApi",
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Event'],
     endpoints: (builder) => ({
-        getEvents: builder.query<Event[], void>({
-            query: () => ({
+        getEvents: builder.query<Event[], {location?:string}>({
+            query: ({location}) => ({
                 url: '/events',
-                method: "GET"
+                method: "GET",
+                params:{location}
             }),
             providesTags: ['Event'],
             transformResponse: (response: GetEventsResponse) =>
@@ -54,8 +56,15 @@ export const eventsApi = createApi({
                 method:"DELETE"
             }),
             invalidatesTags: ['Event']
+        }),
+        getEventsLocation:builder.query<EventsLocationResponse,void>({
+            query:() => ({
+                url:'/events/events-location',
+                method:"GET"
+            }),
+            providesTags:['Event']
         })
     })
 })
 
-export const { useGetEventsQuery, useGetEventByIdQuery, useAddEventMutation, useUpdateEventMutation,useDeleteEventMutation} = eventsApi;
+export const { useGetEventsQuery, useGetEventByIdQuery, useAddEventMutation, useUpdateEventMutation,useDeleteEventMutation,useGetEventsLocationQuery} = eventsApi;

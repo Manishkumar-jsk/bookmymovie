@@ -1,9 +1,13 @@
 "use client";
 
+import { useState } from "react";
+
+//third-party
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CustomCellRendererProps } from "ag-grid-react";
-import { useState } from "react";
+
+//components
 import ModalPortal from "@/app/components/ModalPortal";
 import AddUserModal from "../add-user-modal/AddUserModal";
 import DeleteUserModal from "../delete-user-modal/DeleteUserModal";

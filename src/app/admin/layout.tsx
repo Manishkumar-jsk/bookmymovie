@@ -1,9 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+
+//third-party
 import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+
+//contexts
 import { useAuth } from "../context/AuthContext";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -16,10 +20,10 @@ export default function AdminLayout({
   const data = useAuth();
   const router = useRouter();
 
-  if (data?.user?.role !== "admin") {
-    router.replace("/");
-    return;
-  }
+  // if (data?.user?.role !== "admin") {
+  //   router.replace("/");
+  //   return;
+  // }
   return (
     <div className="flex">
       {/* Admin Sidebar */}

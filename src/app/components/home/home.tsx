@@ -1,11 +1,13 @@
 "use client";
 import { useGetCategoriesQuery } from "@/app/store/api/categoriesApi";
 import { useGetEventsQuery } from "@/app/store/api/eventsApi";
+import { useAppSelector } from "@/app/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function HomePage() {
-  const { data: eventsData } = useGetEventsQuery();
+  const location = useAppSelector((state) => state.location.location);
+  const { data: eventsData } = useGetEventsQuery({location:String(location)});
   const { data: categoriesData } = useGetCategoriesQuery();
 
   return (

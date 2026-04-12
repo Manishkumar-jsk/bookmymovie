@@ -1,8 +1,14 @@
 import React from "react";
+
+//third-party
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
+
+//slices
 import { useDeleteCategoryMutation } from "@/app/store/api/categoriesApi";
+
+//types
 import { DeleteCategoryModalProps } from "@/app/types/categories";
 
 const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({
@@ -44,7 +50,7 @@ const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({
         <p className="text-center text-sm text-gray-500 mt-2">
           Are you sure you want to remove{" "}
           <span className="font-medium text-gray-800">
-            {details?.name|| ""}
+            {details?.name || ""}
           </span>{" "}
           ? <br /> This action{" "}
           <span className="text-red-500">cannot be undone</span>.

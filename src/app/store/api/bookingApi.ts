@@ -1,4 +1,4 @@
-import { GetBookingResponse } from "@/app/types/booking";
+import { BookingResponse, GetBookingResponse } from "@/app/types/booking";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./baseQueryWithAuth";
 
@@ -19,8 +19,14 @@ export const bookingApi = createApi({
                 method: "GET"
             })
         }
-        )
+        ),
+        getBookingStatus: builder.query<BookingResponse, { id: string }>({
+            query: ({ id }) => ({
+                url: `/booking/${id}`,
+                method: "GET"
+            })
+        })
     })
 })
 
-export const { useBookEventMutation, useGetBookingsQuery } = bookingApi;
+export const { useBookEventMutation, useGetBookingsQuery, useGetBookingStatusQuery } = bookingApi;

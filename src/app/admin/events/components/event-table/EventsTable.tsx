@@ -1,11 +1,18 @@
 "use client";
+
+import React, { useState } from "react";
+
+//third-party
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, ICellRendererParams } from "ag-grid-community";
+
+//components
 import AddEditEventModal from "../add-edit-event-modal/AddEventModal";
 import ActionsCell from "../action-cell/ActionCell";
+
+//slices
 import { useGetEventsQuery } from "@/app/store/api/eventsApi";
 
 const EventsTable = () => {

@@ -3,11 +3,17 @@
 import { useFormik } from "formik";
 import { useMemo } from "react";
 import { isNil } from "lodash";
+
+//slices
 import {
   useAddEventMutation,
   useUpdateEventMutation,
 } from "@/app/store/api/eventsApi";
+
+//third-party
 import toast from "react-hot-toast";
+
+//types
 import { EventDetails, TicketType } from "@/app/types/events";
 
 const INITIAL_FORM_VALUES = {
