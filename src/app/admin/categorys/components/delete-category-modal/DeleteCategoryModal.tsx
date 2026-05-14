@@ -60,13 +60,13 @@ const DeleteCategoryModal: React.FC<DeleteCategoryModalProps> = ({
         <div className="mt-6 flex justify-center gap-4">
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm font-medium"
+            className="px-5 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm font-medium cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={handleDelete}
-            className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium shadow-md"
+            className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium shadow-md cursor-pointer"
           >
             Delete
           </button>

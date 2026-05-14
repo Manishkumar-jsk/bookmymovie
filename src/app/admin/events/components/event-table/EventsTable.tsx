@@ -17,7 +17,7 @@ import { useGetEventsQuery } from "@/app/store/api/eventsApi";
 
 const EventsTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const { data: eventsData } = useGetEventsQuery();
+  const { data: eventsData } = useGetEventsQuery({});
   const columnDefs = [
     { field: "_id", sortable: true },
     { field: "title", sortable: true },

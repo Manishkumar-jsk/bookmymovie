@@ -9,17 +9,16 @@ export const eventsApi = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Event'],
     endpoints: (builder) => ({
-        getEvents: builder.query<Event[], {location?:string}>({
-            query: ({location}) => ({
+        getEvents: builder.query<Event[], { location?: string }>({
+            query: ({ location } = {}) => ({
                 url: '/events',
                 method: "GET",
-                params:{location}
+                ...(location ? { params: { location } } : {})
             }),
             providesTags: ['Event'],
             transformResponse: (response: GetEventsResponse) =>
                 response?.data?.map((event) => {
                     const { date, time } = formatDateTime(event.date);
-
                     return { ...event, date, time };
                 })
         }),
@@ -50,21 +49,21 @@ export const eventsApi = createApi({
             }),
             invalidatesTags: ['Event']
         }),
-        deleteEvent:builder.mutation({
-            query:(id) => ({
-                url:`/events/${id}`,
-                method:"DELETE"
+        deleteEvent: builder.mutation({
+            query: (id) => ({
+                url: `/events/${id}`,
+                method: "DELETE"
             }),
             invalidatesTags: ['Event']
         }),
-        getEventsLocation:builder.query<EventsLocationResponse,void>({
-            query:() => ({
-                url:'/events/events-location',
-                method:"GET"
+        getEventsLocation: builder.query<EventsLocationResponse, void>({
+            query: () => ({
+                url: '/events/events-location',
+                method: "GET"
             }),
-            providesTags:['Event']
+            providesTags: ['Event']
         })
     })
 })
 
-export const { useGetEventsQuery, useGetEventByIdQuery, useAddEventMutation, useUpdateEventMutation,useDeleteEventMutation,useGetEventsLocationQuery} = eventsApi;
+export const { useGetEventsQuery, useGetEventByIdQuery, useAddEventMutation, useUpdateEventMutation, useDeleteEventMutation, useGetEventsLocationQuery } = eventsApi;

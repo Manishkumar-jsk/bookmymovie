@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 //slices
 import { useGetEventByIdQuery } from "@/app/store/api/eventsApi";

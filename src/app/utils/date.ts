@@ -15,3 +15,11 @@ export const formatDateTime = (date: string) => {
     time: t?.trim(),
   };
 };
+
+export const formatDate = (date:string) => {
+  return new Date(date).toLocaleString("en-IN",{
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }) 
+}

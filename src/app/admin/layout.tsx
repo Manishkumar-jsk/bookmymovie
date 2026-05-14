@@ -30,12 +30,12 @@ export default function AdminLayout({
       <aside className="w-64 bg-gray-900 text-white min-h-screen p-4">
         <h2 className="text-xl font-bold mb-6">Admin Panel</h2>
         <nav className="space-y-2">
-          <a
-            href="/dashboard"
+          {/* <a
+            href=""
             className="block py-2 px-3 rounded hover:bg-gray-700"
           >
             Dashboard
-          </a>
+          </a> */}
           <a
             href="/admin/events"
             className="block py-2 px-3 rounded hover:bg-gray-700"

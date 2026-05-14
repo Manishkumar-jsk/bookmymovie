@@ -31,7 +31,7 @@ const UserProfileButton = ({ role }: { role: string }) => {
   };
 
   const handleAdmin = () => {
-    router.push("/admin/events");
+    router.push("/admin");
   };
 
   const handleLogout = async () => {
