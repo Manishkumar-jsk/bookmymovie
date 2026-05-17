@@ -1,3 +1,5 @@
+import { JwtPayload } from "jsonwebtoken";
+
 type User = {
   _id: string;
   name: string;
@@ -16,16 +18,16 @@ export type GetUsersResponse = {
 };
 
 export type AddUserPayload = {
-  name:string;
-  email:string;
-  role:string;
+  name: string;
+  email: string;
+  role: string;
 }
 
-export type UpdateUserPayload  = AddUserPayload & {id:string}
+export type UpdateUserPayload = AddUserPayload & { id: string }
 
 export type AddUserResponse = {
-  success:boolean;
-  message:string
+  success: boolean;
+  message: string
 }
 
 export interface userDetails {
@@ -38,10 +40,17 @@ export interface userDetails {
 export interface DeleteUserModalProps {
   isOpen: boolean;
   onClose: () => void;
-  details?:userDetails;
+  details?: userDetails;
 }
 
 export interface EventsLocationResponse {
-  success:boolean;
-  locations:[];
+  success: boolean;
+  locations: [];
+}
+
+export interface DecodedToken extends JwtPayload {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
 }

@@ -1,14 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 
 //third-party
 import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
+import Link from "next/link";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-//contexts
-import { useAuth } from "../context/AuthContext";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -17,9 +15,6 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const data = useAuth();
-  const router = useRouter();
-
   // if (data?.user?.role !== "admin") {
   //   router.replace("/");
   //   return;
@@ -36,30 +31,30 @@ export default function AdminLayout({
           >
             Dashboard
           </a> */}
-          <a
+          <Link
             href="/admin/events"
             className="block py-2 px-3 rounded hover:bg-gray-700"
           >
             Events
-          </a>
-          <a
+          </Link>
+          <Link
             href="/admin/categorys"
             className="block py-2 px-3 rounded hover:bg-gray-700"
           >
             Categories
-          </a>
-          <a
+          </Link>
+          <Link
             href="/admin/bookings"
             className="block py-2 px-3 rounded hover:bg-gray-700"
           >
             Bookings
-          </a>
-          <a
+          </Link>
+          <Link
             href="/admin/users"
             className="block py-2 px-3 rounded hover:bg-gray-700"
           >
             Users
-          </a>
+          </Link>
         </nav>
       </aside>
       <main className="flex-1 p-6">

@@ -12,16 +12,17 @@ import { setLocation } from "@/app/store/slices/locationSlice";
 
 const Header = () => {
   const router = useRouter();
-  const data = useAuth();
-  const {data:locationData} = useGetEventsLocationQuery();
-  const [locations,setLocations] = useState(locationData?.locations.at(0) || '');
+  const { user } = useAuth();
+  const { data: locationData } = useGetEventsLocationQuery();
+  const [locations, setLocations] = useState(
+    locationData?.locations.at(0) || "",
+  );
   const dispatch = useAppDispatch();
-  
 
   useEffect(() => {
-    dispatch(setLocation({location:locations}))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[locations,locationData])
+    dispatch(setLocation({ location: locations }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locations, locationData]);
   return (
     <header className="flex items-center justify-between px-6 py-[14px] shadow-md">
       <h1
@@ -32,14 +33,21 @@ const Header = () => {
       </h1>
 
       <div className="flex items-center gap-4">
-        <select  className="rounded-md px-3 py-2 text-sm outline-none cursor-pointer" onChange={(e) => setLocations(e.target.value)}>
-          {locationData?.locations?.map((location) => (
-            <option key={location} value={location}>{location}</option>
-          ))}
-        </select>
+        {locationData && (
+          <select
+            className="rounded-md px-3 py-2 text-sm outline-none cursor-pointer"
+            onChange={(e) => setLocations(e.target.value)}
+          >
+            {locationData?.locations?.map((location) => (
+              <option key={location} value={location}>
+                {location}
+              </option>
+            ))}
+          </select>
+        )}
 
-        {data?.user ? (
-          <UserProfileButton role={data?.user?.role} />
+        {user ? (
+          <UserProfileButton role={user?.role} />
         ) : (
           <button
             className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 transition cursor-pointer"

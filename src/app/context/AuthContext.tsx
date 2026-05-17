@@ -2,26 +2,39 @@
 
 import { createContext, useContext } from "react";
 
-//slices
+// slices
 import { useGetUserQuery } from "../store/api/authApi";
 
-//types
+// types
 import { AuthContextType } from "../types/authContextType";
+import { DecodedToken } from "../types/user";
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
 });
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider = ({
+  children,
+  initialUser,
+}: {
+  children: React.ReactNode;
+  initialUser: DecodedToken | null;
+}) => {
   const { data, isLoading } = useGetUserQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-    refetchOnFocus: true,
+    skip: !!initialUser,
+    refetchOnMountOrArgChange: false,
+    refetchOnFocus: false,
   });
+
+  const user = data?.user || initialUser;
 
   return (
     <AuthContext.Provider
-      value={{ user: data?.user || null, loading: isLoading }}
+      value={{
+        user,
+        loading: isLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -29,7 +42,5 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
-  return ctx;
+  return useContext(AuthContext);
 };
