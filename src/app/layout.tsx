@@ -19,6 +19,7 @@ import ReduxProvider from "@/app/store/providers/ReduxProvider";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { AuthProvider } from "./context/AuthContext";
 import { DecodedToken } from "./types/user";
+import { SocketProvider } from "./store/providers/SocketProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,10 +73,12 @@ export default async function RootLayout({
       >
         <ReduxProvider>
           <AuthProvider initialUser={initialUser}>
-            <Header />
-            {children}
-            <Toaster position="top-right" reverseOrder={false} />
-            <Footer />
+            <SocketProvider>
+              <Header />
+              {children}
+              <Toaster position="top-right" reverseOrder={false} />
+              <Footer />
+            </SocketProvider>
           </AuthProvider>
         </ReduxProvider>
       </body>
