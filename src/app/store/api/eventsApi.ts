@@ -1,4 +1,4 @@
-import { Event, EventPayload, GetEventsByIdResponse, GetEventsResponse, UpdateEventPayload } from "@/app/types/events";
+import { Event, EventImportStatusResponse, EventPayload, GetEventsByIdResponse, GetEventsResponse, UpdateEventPayload } from "@/app/types/events";
 import { formatDateTime } from "@/app/utils/date";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./baseQueryWithAuth";
@@ -62,8 +62,45 @@ export const eventsApi = createApi({
                 method: "GET"
             }),
             providesTags: ['Event']
+        }),
+        importEvents: builder.mutation({
+            query: (body) => ({
+                url: '/events/import',
+                method: "POST",
+                body
+            })
+        }),
+        getImportStatus: builder.query<EventImportStatusResponse,{importId:string}>({
+            query: (importId) => ({
+                url: `/events/import/${importId}/status`,
+                method: "GET"
+            })
+        }),
+        getImportLogs: builder.query({
+            query: ({type}) => ({
+                url: `/events/get-import-logs/${type}`,
+                method: "GET"
+            })
+        }),
+        downloadEventsData:builder.query({
+            query:() => ({
+                url:`/events/download-events-data`,
+                method:"GET",
+                responseHandler: async (response) => {
+                    if (!response.ok) {
+                        const error = await response.json().catch(() => ({}));
+
+                        throw new Error(
+                            error.message || `Request failed: ${response.status}`
+                        );
+                    }
+
+                    return response.blob();
+                },
+
+            })
         })
     })
 })
 
-export const { useGetEventsQuery, useGetEventByIdQuery, useAddEventMutation, useUpdateEventMutation, useDeleteEventMutation, useGetEventsLocationQuery } = eventsApi;
+export const { useGetEventsQuery, useGetEventByIdQuery, useAddEventMutation, useUpdateEventMutation, useDeleteEventMutation, useGetEventsLocationQuery, useImportEventsMutation, useGetImportStatusQuery, useLazyGetImportStatusQuery, useGetImportLogsQuery,useLazyGetImportLogsQuery,useLazyDownloadEventsDataQuery } = eventsApi;

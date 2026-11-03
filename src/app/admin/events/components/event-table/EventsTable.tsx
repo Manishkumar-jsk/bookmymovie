@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 //third-party
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faPlus, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, ICellRendererParams } from "ag-grid-community";
@@ -14,9 +14,13 @@ import ActionsCell from "../action-cell/ActionCell";
 
 //slices
 import { useGetEventsQuery } from "@/app/store/api/eventsApi";
+import ImportPopup from "../import-popup/ImportPopup";
+import ExportPopup from "../export-popup/ExportPopup";
 
 const EventsTable = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isImportPopupOpen,setIsImportPopupOpen] = useState(false);
+  const [isExportPopupOpen,setIsExportPopupOpen] = useState(false);
   const { data: eventsData } = useGetEventsQuery({});
   const columnDefs = [
     { field: "_id", sortable: true },
@@ -67,6 +71,12 @@ const EventsTable = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
         <h2 className="text-2xl font-semibold">Events Management</h2>
         <div className="flex gap-3">
+          <button type="button" className="cursor-pointer" onClick={() => setIsImportPopupOpen(true)}>
+            <FontAwesomeIcon icon={faUpload} size="2x" />
+          </button>
+          <button type="button" className="cursor-pointer" onClick={() => setIsExportPopupOpen(true)}>
+            <FontAwesomeIcon icon={faDownload} size="2x" />
+          </button>
           <button
             className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition cursor-pointer"
             onClick={() => setIsAddModalOpen(true)}
@@ -92,6 +102,8 @@ const EventsTable = () => {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
       />
+      <ImportPopup isImportPopupOpen={isImportPopupOpen} onClose={() => setIsImportPopupOpen(false)}  />
+      <ExportPopup isExportPopupOpen={isExportPopupOpen} onClose={() => setIsExportPopupOpen(false)}  />
     </div>
   );
 };

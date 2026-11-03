@@ -66,3 +66,14 @@ export interface DeleteBrandModalProps {
 }
 
 export type UpdateEventPayload = EventPayload & { id: string };
+
+export type EventImportStatusResponse = {
+    status: string,
+    total: number,
+    processed:number,
+    imported: number,
+    updated: number,
+    errors: number,
+    percentage: number,
+    error_percentage: number
+}

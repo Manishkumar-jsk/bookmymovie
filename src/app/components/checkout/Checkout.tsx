@@ -82,9 +82,15 @@ const Checkout = () => {
           keyId,
         } = orderData?.data;
         setBookingId(newBookingId);
+        console.log({
+    keyId,
+    orderId,
+    amount,
+    currency
+});
 
         const options = {
-          key: keyId,
+          key: "rzp_test_TOYUlvuRoLjZdC",
           amount,
           currency,
           name: values.name,

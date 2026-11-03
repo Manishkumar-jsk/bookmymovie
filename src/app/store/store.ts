@@ -9,6 +9,7 @@ import authSlice from "./slices/authSlice";
 import locationSlice from "./slices/locationSlice";
 import { paymentApi } from "./api/paymentApi";
 import { adminDashboardApi } from "./api/adminDashboardApi";
+import { notificationsApi } from "./api/notificationsApi";
 
 export const store = configureStore({
   reducer: {
@@ -19,14 +20,15 @@ export const store = configureStore({
     [bookingApi.reducerPath]: bookingApi.reducer,
     [paymentApi.reducerPath]: paymentApi.reducer,
     [adminDashboardApi.reducerPath]: adminDashboardApi.reducer,
+    [notificationsApi.reducerPath]: notificationsApi.reducer,
 
     //slices
     booking: bookingSlice,
     auth: authSlice,
-    location:locationSlice,
+    location: locationSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([authApi.middleware, userApi.middleware, eventsApi.middleware, categoriesApi.middleware, bookingApi.middleware, paymentApi.middleware,adminDashboardApi.middleware]),
+    getDefaultMiddleware().concat([authApi.middleware, userApi.middleware, eventsApi.middleware, categoriesApi.middleware, bookingApi.middleware, paymentApi.middleware, adminDashboardApi.middleware, notificationsApi.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

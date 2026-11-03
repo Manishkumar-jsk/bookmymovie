@@ -3,7 +3,11 @@ import React from "react";
 //components
 import EventByIdCard from "@/app/components/event-by-id-card/EventByIdCard";
 
-export default function EventDetailPage() {
+export default function EventDetailPage({
+  params,
+}: {
+  params: { eventId: string };
+}) {
   return (
     <main
       className="max-w-6xl mx-auto px-4 py-6"
