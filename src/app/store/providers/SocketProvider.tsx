@@ -4,8 +4,9 @@ import { createContext, useContext, useEffect } from "react";
 
 import { getSocket } from "@/app/lib/socket";
 import { useAuth } from "@/app/context/AuthContext";
+import { Socket } from "socket.io-client";
 
-const SocketContext = createContext<any>(null);
+const SocketContext = createContext<Socket | null>(null);
 
 export const SocketProvider = ({
   children,

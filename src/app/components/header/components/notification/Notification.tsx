@@ -35,6 +35,7 @@ const NotificationModal = ({isNotifOpen,notificationData,unreadCount}:Notificati
 
   useEffect(() => {
     if(notificationData?.data){
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setNotifications(notificationData?.data)
     }
   },[notificationData]) 

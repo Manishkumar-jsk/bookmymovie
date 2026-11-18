@@ -10,7 +10,7 @@ export default function SignInPage() {
         <h1 className="text-2xl font-bold text-center mb-6">Sign In</h1>
         <LoginForm />
         <p className="text-sm text-gray-600 text-center mt-4">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="/signup" className="text-red-500 font-semibold">
             Sign Up
           </Link>
